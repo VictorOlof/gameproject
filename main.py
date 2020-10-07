@@ -17,13 +17,18 @@ class Snake:
         self.block_size = block_size
         self.color = color
         self.screen = screen
+        self.length = [(self.x, self.y)]
 
     def move(self):
         self.x += self.x_change
         self.y += self.y_change
+        self.length.append((self.x, self.y))
+        self.length.pop(0)
 
     def draw(self):
-        pygame.draw.rect(self.screen, self.color, [self.x, self.y, self.block_size, self.block_size])
+        # pygame.draw.rect(self.screen, self.color, [self.x, self.y, self.block_size, self.block_size])
+        for item in self.length:
+            pygame.draw.rect(self.screen, self.color, [item[0], item[1], self.block_size, self.block_size])
 
 
 class Food:
@@ -81,13 +86,13 @@ def main():
 
         screen.fill(BLACK)
         snake.move()
-
         if not 0 <= snake.x < SCREEN_WIDTH:
             game_over = True
         if not 0 <= snake.y < SCREEN_HEIGHT:
             game_over = True
 
         if snake.x == food.x and snake.y == food.y:
+            snake.length.append((snake.x, snake.y))
             food.new_position(snake_block)
 
         snake.draw()
