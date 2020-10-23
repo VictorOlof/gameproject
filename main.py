@@ -47,7 +47,7 @@ class Food:
         self.y = random.randrange(0, SCREEN_WIDTH, snake_block)
 
 
-def main():
+def main():  # test
     pygame.init()
 
     # open a window
